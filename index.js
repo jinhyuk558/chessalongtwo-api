@@ -3,11 +3,21 @@ const express = require('express')
 const fetch = require('node-fetch')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 const readStream = require('./nodejs-ndjson-stream-reader')
+const authRoutes = require('./routes/auth')
 const app = express()
+
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+mongoose.connect(process.env.MONGO)
+  .then(() => console.log('connected to DB'))
+  .catch(e => console.log(e))
+
+app.use('/api/auth', authRoutes)
 
 
 
