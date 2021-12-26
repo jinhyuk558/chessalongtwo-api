@@ -4,8 +4,7 @@ const CryptoJS = require('crypto-js')
 const jwt = require('jsonwebtoken')
 
 router.post('/register', async (req, res) => {
-  
-  
+
   try {
     const duplicate = await User.findOne({ username: req.body.username })
     console.log(duplicate)
@@ -19,13 +18,10 @@ router.post('/register', async (req, res) => {
       return res.status(500).send('Is duplicate email')
     } 
   } catch (e) {
-    console.log('Error trying to check for duplicate username/email')
+    return res.status(500).send('Error trying to check for duplicate username/email')
   }
   
-  
 
-  
-  
   const user = new User({
     username: req.body.username,
     email: req.body.email,
@@ -49,7 +45,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username })
-    !user && res.status(401).json('wrong credentials')
+    if (!user) return res.status(401).json('wrong credentials')
 
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
@@ -57,7 +53,10 @@ router.post('/login', async (req, res) => {
     )
 
     const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8)
-    OriginalPassword !== req.body.password && res.status(401).json('wrong credentials')
+    if (OriginalPassword !== req.body.password) {
+      return res.status(401).json('wrong credentials')
+    }
+     
 
     const accessToken = jwt.sign({
       id: user._id,
@@ -66,10 +65,10 @@ router.post('/login', async (req, res) => {
     })
     const { password, ...others } = user._doc 
     console.log('logged in')
-    res.status(200).json({ ...others, accessToken})
+    return res.status(200).json({ ...others, accessToken})
   } catch (e) {
     console.log('log in error')
-    res.status(500).json(e)
+    return res.status(500).json(e)
   }
 })
 

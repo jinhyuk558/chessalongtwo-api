@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const readStream = require('./nodejs-ndjson-stream-reader')
 const authRoutes = require('./routes/auth')
+const collectionRoutes = require('./routes/collection')
 const app = express()
 
 
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGO)
   .catch(e => console.log(e))
 
 app.use('/api/auth', authRoutes)
+app.use('/api/collection', collectionRoutes)
 
 
 
