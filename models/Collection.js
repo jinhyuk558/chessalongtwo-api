@@ -5,7 +5,8 @@ const CollectionSchema = new Schema({
   name: { type: String, required: true },
   userId: { type: String, required: true },
   numGames: { type: Number, required: true },
-  gamesList: { type: Array, required: true }
+  gamesList: { type: Array, required: true },
+  playersList: { type: Array },
 }, { timestamps: true })
 
 module.exports = mongoose.model('Collection', CollectionSchema)

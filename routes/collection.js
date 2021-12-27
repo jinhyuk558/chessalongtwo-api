@@ -26,4 +26,18 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// get list of all collections with given user Id
+router.get('/user/:userId', async (req, res) => {
+  console.log('userId: ' + req.params.userId)
+  try {
+    const userId = req.params.userId
+    const userCollections = await Collection.find({ userId })
+    console.log(userCollections)
+    return res.status(200).json(userCollections)
+  } catch (e) {
+    console.log('error retrieving this user collections')
+    return res.status(500).json(e)
+  }
+})
+
 module.exports = router
