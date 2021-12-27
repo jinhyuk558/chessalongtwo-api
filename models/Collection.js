@@ -7,6 +7,8 @@ const CollectionSchema = new Schema({
   numGames: { type: Number, required: true },
   gamesList: { type: Array, required: true },
   playersList: { type: Array },
+  isPublic: { type: Boolean },
+  timesPlayed: { type: Number }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Collection', CollectionSchema)

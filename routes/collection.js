@@ -40,4 +40,32 @@ router.get('/user/:userId', async (req, res) => {
   }
 })
 
+// increment "timesPlayed" whenver collection is played
+router.put('/increment/:id', async (req, res) => {
+  try {
+    const updateReport = await Collection.updateOne(
+      {_id: req.params.id},
+      { $inc: { 'timesPlayed': 1 } }
+    )
+    res.status(200).json(updateReport)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+})
+
+
+// get a list of the top 5 most popular public collections
+router.get('/sorted/popular', async (req, res) => {
+  try {
+    console.log('trying to get popular games')
+    const topTenList = await Collection.find({ isPublic: true }).sort({ timesPlayed: -1 }).limit(5)
+    console.log('below is top ten list')
+    res.status(200).json(topTenList)
+  } catch (e) {
+    console.log('error trying to get popular games')
+    res.status(500).json(e)
+  }
+})
+
+
 module.exports = router
