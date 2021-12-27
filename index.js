@@ -43,11 +43,22 @@ app.get('/api/games', (req, res) => {
   console.log(url)
   const stream = fetch(url, { headers })
   const onMessage = obj => {
-    games.push(obj)
+    const whiteUsername = obj.players.white.user.username
+    const isWhite = username === whiteUsername
+    if (isWhite) {
+      if (obj.players.white.rating > 2200) {
+        games.push(obj)
+      }
+    } else {
+      if (obj.players.black.rating > 2200) {
+        games.push(obj)
+      }
+    }
+    console.log(obj)
   }
   const onComplete = () => {
     console.log('The stream has completed. Below is the list of games')
-    console.log(games)
+    //console.log(games)
     res.json(games)
   }
   stream
