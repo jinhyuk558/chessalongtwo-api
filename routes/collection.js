@@ -1,7 +1,10 @@
 const router = require('express').Router()
 const Collection = require('../models/Collection')
+const { verifyTokenAndAuthorization, verifyToken } = require('./verifyToken')
 
-router.post('/', async (req, res) => {
+router.post('/', verifyTokenAndAuthorization, async (req, res) => {
+  console.log('below is the req.body test')
+  //console.log(req.body)
   const newCollection = new Collection(req.body)
   try {
     const savedUser = await newCollection.save()
@@ -20,6 +23,7 @@ router.get('/:id', async (req, res) => {
     console.log(collection)
     console.log('successfully retrieved collection')
     return res.status(200).json(collection)
+   
   } catch (e) {
     console.log('error retrieving collection')
     return res.status(500).json(e)
@@ -27,6 +31,8 @@ router.get('/:id', async (req, res) => {
 })
 
 // get list of all collections with given user Id
+// this endpoint is for when user is logged in and 
+// wants to see their collection (both private and public)
 router.get('/user/:userId', async (req, res) => {
   console.log('userId: ' + req.params.userId)
   try {
