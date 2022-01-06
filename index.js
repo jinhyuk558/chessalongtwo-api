@@ -8,6 +8,7 @@ const readStream = require('./nodejs-ndjson-stream-reader')
 const authRoutes = require('./routes/auth')
 const collectionRoutes = require('./routes/collection')
 const analysisRoutes = require('./routes/analysis')
+const leaderboardRoutes = require('./routes/leaderboard')
 const app = express()
 
 
@@ -22,7 +23,7 @@ mongoose.connect(process.env.MONGO)
 app.use('/api/auth', authRoutes)
 app.use('/api/collection', collectionRoutes)
 app.use('/api/analysis', analysisRoutes)
-
+app.use('/api/leaderboards', leaderboardRoutes)
 
 
 // example: http://localhost:5000/api/games?max=10&prefType=blitz&username=DrNykterstein
@@ -54,11 +55,12 @@ app.get('/api/games', (req, res) => {
         games.push(obj)
       }
     }
-    console.log(obj)
+    //console.log(obj)
   }
   const onComplete = () => {
     console.log('The stream has completed. Below is the list of games')
-    //console.log(games)
+    
+    console.log(games)
     res.json(games)
   }
   stream
@@ -72,6 +74,6 @@ app.get('/api/games', (req, res) => {
     
 })
 
-app.listen(5000, () => console.log('app listening on 5000 ...'))
+app.listen(process.env.PORT || 5000, () => console.log('app listening on 5000 ...'))
 
 // ?max=a&perfType=b&username=c

@@ -41,8 +41,9 @@ router.post('/register', async (req, res) => {
     }, process.env.JWT_SEC, {
       expiresIn: '3d'
     })
+    let refreshToken = await RefreshToken.createToken(user)
     const { password, ...others } = saved._doc 
-    return res.status(201).json({ ...others, accessToken})
+    return res.status(201).json({ ...others, accessToken, refreshToken})
 
   } catch (e) {
     console.log('failed to save user')

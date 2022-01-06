@@ -14,9 +14,10 @@ RefreshTokenSchema.statics.createToken = async function (user) {
   let expiredAt = new Date()
 
   expiredAt.setSeconds(
-    expiredAt.getSeconds() + process.env.JWT_REFRESH_EXP
+    expiredAt.getSeconds() + 8640000
   )
 
+  
   let _token = uuidv4()
 
   let _object = new this({

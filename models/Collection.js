@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const CollectionSchema = new Schema({
   name: { type: String, required: true },
   userId: { type: String, required: true },
+  username: {type: String, required: false },
   numGames: { type: Number, required: true },
   gamesList: { type: Array, required: true },
   playersList: { type: Array },
