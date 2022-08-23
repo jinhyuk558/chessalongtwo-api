@@ -51,5 +51,3 @@ module.exports = {
   verifyToken,
   verifyTokenAndAuthorization
 }
-
-// NOW: Yes! The token is up to date. However, why is the token not valid?
