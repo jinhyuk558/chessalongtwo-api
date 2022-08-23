@@ -129,8 +129,3 @@ router.post('/refreshtoken', refreshToken)
 module.exports = router
 
 
-// the use rverification w/ jwt seems to be working.
-// confirm w/ postman
-
-// above is the refresh token method. where should I 
-// use it?
