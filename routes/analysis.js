@@ -25,7 +25,3 @@ router.get('/', async (req, res) => {
 
 module.exports = router
 
-
-
-
-//http://localhost:5000/api/analysis?fen=r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R%20b%20KQkq%20-%203%203
