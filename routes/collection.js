@@ -17,7 +17,6 @@ router.post('/:userId', verifyTokenAndAuthorization, async (req, res) => {
 
 // check if token userId matches with collection userId
 
-// see if I want to use queries instead
 router.get('/user/:id/:userId', verifyTokenAndAuthorization, async (req, res) => {
   console.log('id: ' + req.params.id)
   try {
